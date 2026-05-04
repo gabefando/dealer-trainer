@@ -15,12 +15,13 @@ function BackBar({ title }) {
       display: 'flex',
       alignItems: 'center',
       gap: 12,
-      padding: '12px 16px',
+      paddingTop: 'max(12px, env(safe-area-inset-top))',
+      paddingBottom: 12,
+      paddingLeft: 8,
+      paddingRight: 16,
       background: 'rgba(255,255,255,0.04)',
       borderBottom: '1px solid rgba(255,215,0,0.1)',
-      position: 'sticky',
-      top: 0,
-      zIndex: 50,
+      flexShrink: 0,
     }}>
       <button
         onClick={() => navigate('/')}
@@ -28,10 +29,17 @@ function BackBar({ title }) {
           background: 'none',
           border: 'none',
           color: '#FFD700',
-          fontSize: 22,
+          fontSize: 26,
           cursor: 'pointer',
-          padding: '4px 8px 4px 0',
+          padding: '8px 12px',
           lineHeight: 1,
+          minWidth: 44,
+          minHeight: 44,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: 8,
+          WebkitTapHighlightColor: 'transparent',
         }}
         aria-label="Back to Home"
       >
@@ -44,9 +52,15 @@ function BackBar({ title }) {
 
 function ModuleWrapper({ title, children }) {
   return (
-    <div style={{ minHeight: '100dvh', background: '#1a1a2e', display: 'flex', flexDirection: 'column' }}>
+    <div style={{
+      height: '100dvh',
+      background: '#1a1a2e',
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'hidden',
+    }}>
       <BackBar title={title} />
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0, overflow: 'hidden' }}>
         {children}
       </div>
     </div>

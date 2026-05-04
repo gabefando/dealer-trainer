@@ -124,14 +124,14 @@ function Sprint({ level, mode, weakItems, onFinish }) {
   }
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '12px 20px', gap: 12 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '10px 20px 16px', gap: 10, minHeight: 0, overflow: 'hidden' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
         <Timer timeLeft={timeLeft} total={SPRINT_SECS} />
         <div style={{ fontSize: 13, color: '#9ca3af' }}>{results.filter(r => r.correct).length}/{results.length}</div>
       </div>
 
       {/* Win type */}
-      <div style={{ textAlign: 'center' }}>
+      <div style={{ textAlign: 'center', flexShrink: 0 }}>
         <div style={{
           display: 'inline-block',
           background: 'rgba(255,215,0,0.12)',
@@ -151,15 +151,13 @@ function Sprint({ level, mode, weakItems, onFinish }) {
         )}
       </div>
 
-      {/* Chips */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 140 }}>
+      {/* Chips — fills remaining space */}
+      <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
         {question && <ChipStack chipCounts={question.chips} size={52} />}
-      </div>
-      <div style={{ textAlign: 'center', fontSize: 13, color: '#9ca3af' }}>
-        Bet: <span style={{ color: 'white', fontWeight: 600 }}>{formatVal(question?.betAmount)}</span>
       </div>
 
       {/* Input */}
+      <div style={{ flexShrink: 0 }}>
       <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 10 }}>
         <input
           ref={inputRef}
@@ -182,6 +180,7 @@ function Sprint({ level, mode, weakItems, onFinish }) {
           ✓
         </button>
       </form>
+      </div>
     </div>
   )
 }

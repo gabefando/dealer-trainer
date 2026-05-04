@@ -114,46 +114,49 @@ function Sprint({ level, onFinish }) {
   const soft = question && isSoft(question.cards)
 
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '12px 20px', gap: 12 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '10px 20px 16px', gap: 10, minHeight: 0, overflow: 'hidden' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
         <Timer timeLeft={timeLeft} total={SPRINT_SECS} />
         <div style={{ fontSize: 13, color: '#9ca3af' }}>{results.filter(r => r.correct).length}/{results.length}</div>
       </div>
 
-      {/* Cards */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, flexWrap: 'wrap', minHeight: 120 }}>
-        {question?.cards.map((card, i) => (
-          <Card key={i} rank={card.rank} suit={card.suit} width={58} height={84} />
-        ))}
+      {/* Cards — fills remaining space */}
+      <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, overflow: 'hidden' }}>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', justifyContent: 'center' }}>
+          {question?.cards.map((card, i) => (
+            <Card key={i} rank={card.rank} suit={card.suit} width={58} height={84} />
+          ))}
+        </div>
+        {soft && (
+          <div style={{ fontSize: 13, color: '#f59e0b' }}>Soft hand</div>
+        )}
       </div>
 
-      {soft && (
-        <div style={{ textAlign: 'center', fontSize: 13, color: '#f59e0b' }}>Soft hand</div>
-      )}
-
       {/* Input */}
-      <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 10 }}>
-        <input
-          ref={inputRef}
-          type="number"
-          inputMode="numeric"
-          value={answer}
-          onChange={e => setAnswer(e.target.value)}
-          placeholder="Hand total"
-          style={{
-            flex: 1, background: 'rgba(255,255,255,0.08)',
-            border: '2px solid rgba(255,215,0,0.3)', borderRadius: 12,
-            padding: '14px 16px', fontSize: 22, fontWeight: 700,
-            color: 'white', fontFamily: 'Inter, system-ui', outline: 'none',
-          }}
-          autoComplete="off"
-        />
-        <button type="submit"
-          style={{ background: '#FFD700', color: '#1a1a2e', border: 'none', borderRadius: 12, padding: '14px 20px', fontSize: 20, fontWeight: 800, cursor: 'pointer' }}>
-          ✓
-        </button>
-      </form>
-      <div style={{ fontSize: 12, color: '#555', textAlign: 'center' }}>Target: &lt;{SPEED_TARGET}s per hand</div>
+      <div style={{ flexShrink: 0 }}>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 10 }}>
+          <input
+            ref={inputRef}
+            type="number"
+            inputMode="numeric"
+            value={answer}
+            onChange={e => setAnswer(e.target.value)}
+            placeholder="Hand total"
+            style={{
+              flex: 1, background: 'rgba(255,255,255,0.08)',
+              border: '2px solid rgba(255,215,0,0.3)', borderRadius: 12,
+              padding: '14px 16px', fontSize: 22, fontWeight: 700,
+              color: 'white', fontFamily: 'Inter, system-ui', outline: 'none',
+            }}
+            autoComplete="off"
+          />
+          <button type="submit"
+            style={{ background: '#FFD700', color: '#1a1a2e', border: 'none', borderRadius: 12, padding: '14px 20px', fontSize: 20, fontWeight: 800, cursor: 'pointer', flexShrink: 0 }}>
+            ✓
+          </button>
+        </form>
+        <div style={{ fontSize: 12, color: '#555', textAlign: 'center', marginTop: 6 }}>Target: &lt;{SPEED_TARGET}s per hand</div>
+      </div>
     </div>
   )
 }
